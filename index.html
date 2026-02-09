@@ -1,101 +1,124 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Windows Tools Info</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GameHub</title>
   <style>
     body {
       margin: 0;
-      font-family: "Trebuchet MS", sans-serif;
-      background-color: #f0f0f0;
-      color: #333;
-    }
-    header {
-      background-color: #000080;
-      color: #fff;
-      padding: 20px;
-      text-align: center;
-      font-size: 32px;
-      text-shadow: 2px 2px #444;
-    }
-    .container {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: linear-gradient(135deg, #0f0f1a, #1c1c29);
       display: flex;
-    }
-    nav {
-      width: 200px;
-      background-color: #222;
-      color: #fff;
-      padding: 20px;
+      justify-content: center;
+      align-items: center;
       height: 100vh;
-    }
-    nav h2 {
-      font-size: 18px;
-      margin-bottom: 10px;
-      border-bottom: 1px solid #555;
-      padding-bottom: 5px;
-    }
-    nav a {
-      display: block;
-      color: #00FFFF;
-      text-decoration: none;
-      margin: 8px 0;
-      font-weight: bold;
-    }
-    nav a:hover {
-      color: #FFD700;
-    }
-    main {
-      flex: 1;
-      padding: 40px;
-      background-color: #fff;
-    }
-    main h1 {
-      color: #000080;
-      font-size: 28px;
-      margin-bottom: 20px;
-    }
-    main p {
-      font-size: 18px;
-      line-height: 1.6;
-    }
-    footer {
-      text-align: center;
-      padding: 15px;
-      background-color: #000080;
       color: #fff;
-      font-size: 14px;
+      overflow: hidden;
+    }
+
+    .card {
+      background: #1e1e2f;
+      border-radius: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      padding: 40px;
+      text-align: center;
+      max-width: 90%;
+      width: 400px;
+      animation: fadeInUp 1s ease-out;
+      position: relative;
+      z-index: 2;
+    }
+
+    .card h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #e5e5e5;
+      transition: transform 0.7s ease, opacity 0.7s ease;
+    }
+
+    .card p {
+      font-size: 1rem;
+      color: #b0b0b5;
+      margin-bottom: 30px;
+      transition: transform 1s ease, opacity 1s ease;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      border-radius: 30px;
+      background: #ff4757;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255,71,87,0.4);
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Swipe-up overlay */
+    .overlay {
+      position: fixed;
+      bottom: -100%;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #0f0f1a;
+      z-index: 1;
+      transition: bottom 0.6s ease-in-out;
+    }
+
+    .overlay.active {
+      bottom: 0;
+    }
+
+    /* Responsive text scaling */
+    @media (max-width: 600px) {
+      .card h1 { font-size: 1.5rem; }
+      .card p { font-size: 0.9rem; }
     }
   </style>
 </head>
 <body>
-  <header>✨ Windows Tools Info ✨</header>
-  
-  <div class="container">
-    <nav>
-      <h2>Navigation</h2>
-      <a href="index.html">🏠 Home</a>
-      <a href="tools.html">🛠️ Tools</a>
-      <a href="about.html">ℹ️ About</a>
-      <a href="contact.html">📧 Contact</a>
-    </nav>
-    
-    <main>
-      <h1>Welcome to Windows Tools Info</h1>
-      <p>
-        Step back into the early 2000’s! This site is dedicated to exploring the classic 
-        Windows utilities and features that shaped the computing experience of a generation. 
-        Whether you’re here for nostalgia or curiosity, you’ll find insights, tips, and 
-        throwbacks to the tools that kept our PCs running smoothly.
-      </p>
-      <p>
-        Use the sidebar to navigate to the tools page, where you’ll discover detailed 
-        information about Disk Cleanup, System Restore, Defragmenter, and more. 
-        Enjoy the retro vibes and relive the golden age of Windows computing!
-      </p>
-    </main>
+  <div class="card">
+    <h1 id="title">GameHub</h1>
+    <p id="subtitle">Your portal to the latest gaming news and updates.</p>
+    <button class="btn" id="enterBtn">Enter</button>
   </div>
-  
-  <footer>
-    © Windows Tools Info | Best viewed in Internet Explorer 6 😎
-  </footer>
+
+  <div class="overlay" id="overlay"></div>
+
+  <script>
+    const btn = document.getElementById('enterBtn');
+    const overlay = document.getElementById('overlay');
+    const title = document.getElementById('title');
+    const subtitle = document.getElementById('subtitle');
+
+    btn.addEventListener('click', () => {
+      // Animate text off screen at different speeds
+      title.style.transform = "translateY(-150%)";
+      title.style.opacity = "0";
+      subtitle.style.transform = "translateY(-200%)";
+      subtitle.style.opacity = "0";
+
+      // Trigger swipe-up overlay
+      overlay.classList.add('active');
+
+      // Navigate after animation
+      setTimeout(() => {
+        window.location.href = "dashboard.html";
+      }, 1000); // wait for animations
+    });
+  </script>
 </body>
 </html>
