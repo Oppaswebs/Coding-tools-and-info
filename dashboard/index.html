@@ -10,6 +10,7 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background: #0f0f1a;
       color: #fff;
+      overflow-y: scroll;
     }
 
     .topbar {
@@ -42,9 +43,32 @@
       color: #ff4757;
     }
 
+    .banner {
+      background: #ff4757;
+      color: #fff;
+      padding: 8px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .banner span {
+      display: inline-block;
+      padding-left: 100%;
+      animation: scrollText 12s linear infinite;
+      font-weight: bold;
+    }
+
+    @keyframes scrollText {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+
     .content {
       padding: 40px;
       animation: fadeIn 0.8s ease-out;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
     }
 
     @keyframes fadeIn {
@@ -52,42 +76,291 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    .info-card {
+    .main-info {
       background: #1e1e2f;
       border-radius: 20px;
       padding: 30px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-      max-width: 600px;
-      margin: auto;
+      margin-bottom: 30px;
       text-align: center;
+      width: 100%;
     }
 
-    .info-card h2 {
+    .main-info h2 {
       margin-bottom: 15px;
       color: #ff4757;
     }
 
-    .info-card p {
+    .main-info p {
       color: #b0b0b5;
+    }
+
+    .section-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      width: 100%;
+    }
+
+    .section-labels div {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #ff4757;
+    }
+
+    .info-box {
+      background: #1e1e2f;
+      border: 2px solid #ff4757;
+      border-radius: 12px;
+      padding: 20px;
+      width: 45%;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      color: #b0b0b5;
+    }
+
+    .info-box h3 {
+      color: #ff4757;
+      margin-bottom: 8px;
+    }
+
+    .info-box img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .info-box p {
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+
+    /* Mobile-friendly adjustments */
+    @media (max-width: 768px) {
+      .info-box {
+        width: 100%; /* stack boxes vertically on smaller screens */
+      }
+
+      .section-labels {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
     }
   </style>
 </head>
+
 <body>
   <div class="topbar">
     <div class="logo">GameHub</div>
     <nav>
       <a href="#">Home</a>
-      <a href="#">News</a>
-      <a href="#">Reviews</a>
-      <a href="#">Community</a>
+      <a href="Deals/index.html">Gaming-Console Deals</a>
     </nav>
   </div>
 
+  <div class="banner">
+    <span>Site still under work, Expect bugs</span>
+  </div>
+
   <div class="content">
-    <div class="info-card">
-      <h2>Latest Gaming Updates</h2>
-      <p>Stay tuned for breaking news, reviews, and community highlights from the world of gaming.</p>
+    <div class="main-info">
+      <h2>Welcome to GameHub</h2>
+      <p>This site provides information about gaming consoles, updates, and more. Explore the boxes below to learn about different consoles.</p>
     </div>
+
+<div class="info-box" id="time-box">
+  <h3>Date & Time</h3>
+  <p id="current-date"></p>
+  <p>
+    <span id="current-time" style="cursor:pointer; color:#ff4757; font-weight:bold;">
+      Click to change region
+    </span>
+  </p>
+  <select id="region-select" style="display:none; margin-top:10px;">
+    <option value="Australia/Sydney">Australia Eastern Standard Time (AEST)</option>
+    <option value="America/New_York">New York (EST)</option>
+    <option value="Europe/London">London (GMT)</option>
+    <option value="Asia/Tokyo">Tokyo (JST)</option>
+  </select>
+</div>
+
+<script>
+  let region = "Australia/Sydney"; // default region
+
+  function updateTime() {
+    let now = new Date();
+    let options = {
+      timeZone: region,
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit"
+    };
+    let formatter = new Intl.DateTimeFormat([], options);
+    let parts = formatter.formatToParts(now);
+
+    // Extract date and time separately
+    let dateStr = parts.filter(p => ["day","month","year"].includes(p.type))
+                       .map(p => p.value).join(" ");
+    let timeStr = parts.filter(p => ["hour","minute","second"].includes(p.type))
+                       .map(p => p.value).join(":");
+
+    document.getElementById("current-date").textContent = "Date: " + dateStr;
+    document.getElementById("current-time").textContent = "Time (" + region + "): " + timeStr;
+  }
+
+  // Update every second
+  setInterval(updateTime, 1000);
+  updateTime();
+
+  // Toggle dropdown when clicking time
+  document.getElementById("current-time").addEventListener("click", () => {
+    let select = document.getElementById("region-select");
+    select.style.display = (select.style.display === "none") ? "block" : "none";
+  });
+
+  // Change region when dropdown changes
+  document.getElementById("region-select").addEventListener("change", (e) => {
+    region = e.target.value;
+    updateTime();
+  });
+</script>
+
+
+
+
+
+  
+
+<!-- CONSOLES --!>
+
+<!-- XBOX --!>
+
+<div>
+
+<hr>
+<h2 style="color:#ff4757;">Gaming Console Info</h2>
+
+
+
+
+
+<div class="info-box">
+  <h3>XBOX (original)</h3>
+  <img src="images/XBOX.png" alt="XBOX" style="width:100%; border-radius:8px; margin-bottom:10px;">
+  <p>
+    The original Xbox was released by Microsoft in 2001 and marked the company’s
+    first entry into the video game console market. Designed to compete with the
+    PlayStation 2 and Nintendo GameCube, the Xbox introduced PC-style hardware
+    into home consoles, setting it apart from its competitors.
+    <br><br>
+    One of the console’s most defining achievements was the launch of <strong>Halo: Combat Evolved</strong>,
+    which became a system-selling title and helped establish Xbox as a major brand.
+    The Xbox also laid the foundation for online console gaming through Xbox Live,
+    changing how players connected and competed worldwide.
+  </p>
+
+  <hr>
+
+  <h3>Hardware & Technical Specifications</h3>
+  <hr>
+
+  <strong>CPU:</strong> Intel Pentium III–based processor (733 MHz)
+  <hr>
+
+  <strong>GPU:</strong> NVIDIA NV2A
+  <hr>
+
+  <strong>RAM:</strong> 64 MB DDR SDRAM
+  <hr>
+
+  <strong>Storage:</strong> 8–10 GB internal hard drive
+  <hr>
+
+  <strong>Media Format:</strong> DVD-ROM
+  <hr>
+
+  <strong>Connectivity:</strong> Ethernet port (Xbox Live support)
+  <hr>
+
+  <strong>Controller Ports:</strong> 4 wired ports
+  <hr>
+
+  <strong>Release Year:</strong> 2001
+</div>
+
+
+<!--XBOX--!>
+<div class="info-box">
+  <h3>Xbox 360</h3>
+  <img src="images/Xbox360.png" alt="Xbox 360" style="width:100%; border-radius:8px; margin-bottom:10px;">
+
+  <h3>Story</h3>
+  <p>
+    The Xbox 360, released in 2005, is one of the most influential video game consoles ever produced by Microsoft.
+    As part of the seventh generation of consoles, it played a major role in shaping modern gaming culture and online console ecosystems.
+    <br><br>
+    The console helped standardize features that are now expected in gaming, including online multiplayer services,
+    digital game distribution, and achievement systems. Through Xbox Live, players were able to connect globally for multiplayer gaming,
+    voice chat, and downloadable content, setting a benchmark for future platforms.
+    <br><br>
+    With a game library exceeding 2,000 titles, the Xbox 360 became home to many critically acclaimed and culturally significant games such as
+    <strong>Halo 3</strong>, <strong>Gears of War</strong>, <strong>Forza Motorsport</strong>, <strong>Red Dead Redemption</strong>, and
+    <strong>The Elder Scrolls V: Skyrim</strong>. These titles contributed to the console’s long-lasting reputation and continued relevance even years after its discontinuation in 2016.
+    <br><br>
+    Despite early hardware reliability issues—most notably the Red Ring of Death—Microsoft’s later hardware revisions improved stability,
+    and the Xbox 360 remains widely regarded as a defining console of its era.
+  </p>
+
+  <hr>
+
+  <h3>Hardware & Technical Specifications</h3>
+  <hr>
+
+  <strong>CPU:</strong> Triple-core PowerPC-based processor
+  <hr>
+  <strong>GPU:</strong> ATI-designed graphics processor
+  <hr>
+  <strong>RAM:</strong> 512 MB GDDR3
+  <hr>
+  <strong>Storage:</strong> Detachable hard drives ranging from 20GB to 500GB
+  <hr>
+  <strong>Media Format:</strong> DVD-ROM
+  <hr>
+  <strong>Controllers:</strong> Wireless controllers as standard
+  <hr>
+  <strong>Network:</strong> Ethernet on all models; built-in Wi-Fi on Xbox 360 S and E
+  <hr>
+  <strong>Ports:</strong> USB ports for accessories and storage expansion
+  <hr>
+  <strong>Multimedia:</strong> DVD playback, music, and video streaming applications
+
+  <hr>
+
+  <h3>Console Models</h3>
+  <hr>
+
+  <strong>Xbox 360 (Original):</strong> Initial release with a larger chassis
+  <hr>
+  <strong>Xbox 360 S (Slim):</strong> Quieter operation, improved cooling, integrated Wi-Fi
+  <hr>
+  <strong>Xbox 360 E:</strong> Final hardware revision with a redesigned exterior
+</div>
+
+
+<div class="info-box">
+  <h3>Console 1</h3>
+  <img src="images/xbox-series-x.png" alt="Xbox Series X" style="width:100%; border-radius:8px; margin-bottom:10px;">
+  <p>Enter details here...</p>
+</div>
+
+</div>
+
   </div>
 </body>
 </html>
