@@ -31,15 +31,21 @@
       color: #ff4757;
     }
 
-    .topbar nav a {
+    .topbar nav a,
+    .topbar nav button {
       margin-left: 20px;
       text-decoration: none;
       color: #b0b0b5;
       font-weight: 500;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
       transition: color 0.2s ease;
     }
 
-    .topbar nav a:hover {
+    .topbar nav a:hover,
+    .topbar nav button:hover {
       color: #ff4757;
     }
 
@@ -156,8 +162,9 @@
   <div class="topbar">
     <div class="logo">GameHub</div>
     <nav>
-      <a href="#">Home</a>
-      <a href="GameHub/Deals/index.html">Gaming-Console Deals</a>
+      <a href="/GameHub/index.html">Home</a>
+      <!-- Replaced old link with button -->
+      <button id="dealsBtn">Gaming-Console Deals</button>
     </nav>
   </div>
 
@@ -171,189 +178,93 @@
       <p>This site provides information about gaming consoles, updates, and more. Explore the boxes below to learn about different consoles.</p>
     </div>
 
-<div class="info-box" id="time-box">
-  <h3>Date & Time</h3>
-  <p id="current-date"></p>
-  <p>
-    <span id="current-time" style="cursor:pointer; color:#ff4757; font-weight:bold;">
-      Click to change region
-    </span>
-  </p>
-  <select id="region-select" style="display:none; margin-top:10px;">
-    <option value="Australia/Sydney">Australia Eastern Standard Time (AEST)</option>
-    <option value="America/New_York">New York (EST)</option>
-    <option value="Europe/London">London (GMT)</option>
-    <option value="Asia/Tokyo">Tokyo (JST)</option>
-  </select>
-</div>
+    <!-- Date & Time box -->
+    <div class="info-box" id="time-box">
+      <h3>Date & Time</h3>
+      <p id="current-date"></p>
+      <p>
+        <span id="current-time" style="cursor:pointer; color:#ff4757; font-weight:bold;">
+          Click to change region
+        </span>
+      </p>
+      <select id="region-select" style="display:none; margin-top:10px;">
+        <option value="Australia/Sydney">Australia Eastern Standard Time (AEST)</option>
+        <option value="America/New_York">New York (EST)</option>
+        <option value="Europe/London">London (GMT)</option>
+        <option value="Asia/Tokyo">Tokyo (JST)</option>
+      </select>
+    </div>
 
-<script>
-  let region = "Australia/Sydney"; // default region
+    <!-- Console info boxes -->
+    <h2 style="color:#ff4757;">Gaming Console Info</h2>
 
-  function updateTime() {
-    let now = new Date();
-    let options = {
-      timeZone: region,
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit"
-    };
-    let formatter = new Intl.DateTimeFormat([], options);
-    let parts = formatter.formatToParts(now);
+    <div class="info-box">
+      <h3>XBOX (original)</h3>
+      <img src="images/XBOX.png" alt="XBOX">
+      <p>...</p>
+    </div>
 
-    // Extract date and time separately
-    let dateStr = parts.filter(p => ["day","month","year"].includes(p.type))
-                       .map(p => p.value).join(" ");
-    let timeStr = parts.filter(p => ["hour","minute","second"].includes(p.type))
-                       .map(p => p.value).join(":");
+    <div class="info-box">
+      <h3>Xbox 360</h3>
+      <img src="images/Xbox360.png" alt="Xbox 360">
+      <p>...</p>
+    </div>
 
-    document.getElementById("current-date").textContent = "Date: " + dateStr;
-    document.getElementById("current-time").textContent = "Time (" + region + "): " + timeStr;
-  }
+    <div class="info-box">
+      <h3>Console 1</h3>
+      <img src="images/xbox-series-x.png" alt="Xbox Series X">
+      <p>Enter details here...</p>
+    </div>
+  </div>
 
-  // Update every second
-  setInterval(updateTime, 1000);
-  updateTime();
+  <script>
+    // Time region logic
+    let region = "Australia/Sydney"; // default region
 
-  // Toggle dropdown when clicking time
-  document.getElementById("current-time").addEventListener("click", () => {
-    let select = document.getElementById("region-select");
-    select.style.display = (select.style.display === "none") ? "block" : "none";
-  });
+    function updateTime() {
+      let now = new Date();
+      let options = {
+        timeZone: region,
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit"
+      };
+      let formatter = new Intl.DateTimeFormat([], options);
+      let parts = formatter.formatToParts(now);
 
-  // Change region when dropdown changes
-  document.getElementById("region-select").addEventListener("change", (e) => {
-    region = e.target.value;
+      let dateStr = parts.filter(p => ["day","month","year"].includes(p.type))
+                         .map(p => p.value).join(" ");
+      let timeStr = parts.filter(p => ["hour","minute","second"].includes(p.type))
+                         .map(p => p.value).join(":");
+
+      document.getElementById("current-date").textContent = "Date: " + dateStr;
+      document.getElementById("current-time").textContent = "Time (" + region + "): " + timeStr;
+    }
+
+    setInterval(updateTime, 1000);
     updateTime();
-  });
-</script>
 
+    document.getElementById("current-time").addEventListener("click", () => {
+      let select = document.getElementById("region-select");
+      select.style.display = (select.style.display === "none") ? "block" : "none";
+    });
 
+    document.getElementById("region-select").addEventListener("change", (e) => {
+      region = e.target.value;
+      updateTime();
+    });
 
-
-
-  
-
-<!-- CONSOLES --!>
-
-<!-- XBOX --!>
-<h2 style="color:#ff4757;">Gaming Console Info</h2>
-
-
-
-
-
-<div class="info-box">
-  <h3>XBOX (original)</h3>
-  <img src="images/XBOX.png" alt="XBOX" style="width:100%; border-radius:8px; margin-bottom:10px;">
-  <p>
-    The original Xbox was released by Microsoft in 2001 and marked the company’s
-    first entry into the video game console market. Designed to compete with the
-    PlayStation 2 and Nintendo GameCube, the Xbox introduced PC-style hardware
-    into home consoles, setting it apart from its competitors.
-    <br><br>
-    One of the console’s most defining achievements was the launch of <strong>Halo: Combat Evolved</strong>,
-    which became a system-selling title and helped establish Xbox as a major brand.
-    The Xbox also laid the foundation for online console gaming through Xbox Live,
-    changing how players connected and competed worldwide.
-  </p>
-
-  <hr>
-
-  <h3>Hardware & Technical Specifications</h3>
-  <hr>
-
-  <strong>CPU:</strong> Intel Pentium III–based processor (733 MHz)
-  <hr>
-
-  <strong>GPU:</strong> NVIDIA NV2A
-  <hr>
-
-  <strong>RAM:</strong> 64 MB DDR SDRAM
-  <hr>
-
-  <strong>Storage:</strong> 8–10 GB internal hard drive
-  <hr>
-
-  <strong>Media Format:</strong> DVD-ROM
-  <hr>
-
-  <strong>Connectivity:</strong> Ethernet port (Xbox Live support)
-  <hr>
-
-  <strong>Controller Ports:</strong> 4 wired ports
-  <hr>
-
-  <strong>Release Year:</strong> 2001
-</div>
-
-
-<!--XBOX--!>
-<div class="info-box">
-  <h3>Xbox 360</h3>
-  <img src="images/Xbox360.png" alt="Xbox 360" style="width:100%; border-radius:8px; margin-bottom:10px;">
-
-  <h3>Story</h3>
-  <p>
-    The Xbox 360, released in 2005, is one of the most influential video game consoles ever produced by Microsoft.
-    As part of the seventh generation of consoles, it played a major role in shaping modern gaming culture and online console ecosystems.
-    <br><br>
-    The console helped standardize features that are now expected in gaming, including online multiplayer services,
-    digital game distribution, and achievement systems. Through Xbox Live, players were able to connect globally for multiplayer gaming,
-    voice chat, and downloadable content, setting a benchmark for future platforms.
-    <br><br>
-    With a game library exceeding 2,000 titles, the Xbox 360 became home to many critically acclaimed and culturally significant games such as
-    <strong>Halo 3</strong>, <strong>Gears of War</strong>, <strong>Forza Motorsport</strong>, <strong>Red Dead Redemption</strong>, and
-    <strong>The Elder Scrolls V: Skyrim</strong>. These titles contributed to the console’s long-lasting reputation and continued relevance even years after its discontinuation in 2016.
-    <br><br>
-    Despite early hardware reliability issues—most notably the Red Ring of Death—Microsoft’s later hardware revisions improved stability,
-    and the Xbox 360 remains widely regarded as a defining console of its era.
-  </p>
-
-  <hr>
-
-  <h3>Hardware & Technical Specifications</h3>
-  <hr>
-
-  <strong>CPU:</strong> Triple-core PowerPC-based processor
-  <hr>
-  <strong>GPU:</strong> ATI-designed graphics processor
-  <hr>
-  <strong>RAM:</strong> 512 MB GDDR3
-  <hr>
-  <strong>Storage:</strong> Detachable hard drives ranging from 20GB to 500GB
-  <hr>
-  <strong>Media Format:</strong> DVD-ROM
-  <hr>
-  <strong>Controllers:</strong> Wireless controllers as standard
-  <hr>
-  <strong>Network:</strong> Ethernet on all models; built-in Wi-Fi on Xbox 360 S and E
-  <hr>
-  <strong>Ports:</strong> USB ports for accessories and storage expansion
-  <hr>
-  <strong>Multimedia:</strong> DVD playback, music, and video streaming applications
-
-  <hr>
-
-  <h3>Console Models</h3>
-  <hr>
-
-  <strong>Xbox 360 (Original):</strong> Initial release with a larger chassis
-  <hr>
-  <strong>Xbox 360 S (Slim):</strong> Quieter operation, improved cooling, integrated Wi-Fi
-  <hr>
-  <strong>Xbox 360 E:</strong> Final hardware revision with a redesigned exterior
-</div>
-
-
-<div class="info-box">
-  <h3>Console 1</h3>
-  <img src="images/xbox-series-x.png" alt="Xbox Series X" style="width:100%; border-radius:8px; margin-bottom:10px;">
-  <p>Enter details here...</p>
-</div>
-
+    // Deals button redirect
+    const dealsBtn = document.getElementById('dealsBtn');
+    dealsBtn.addEventListener('click', () => {
+      setTimeout(() => {
+        window.location.href = "/GameHub/Deals/";
+      }, 1000); // 1 second delay
+    });
+  </script>
 </body>
 </html>
+
