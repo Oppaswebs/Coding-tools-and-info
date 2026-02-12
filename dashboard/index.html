@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta-name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GameHub Dashboard</title>
   <style>
     body {
@@ -101,19 +101,6 @@
       color: #b0b0b5;
     }
 
-    .section-labels {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 20px;
-      width: 100%;
-    }
-
-    .section-labels div {
-      font-size: 1.2rem;
-      font-weight: bold;
-      color: #ff4757;
-    }
-
     .info-box {
       background: #1e1e2f;
       border: 2px solid #ff4757;
@@ -132,27 +119,13 @@
 
     .info-box img {
       width: 100%;
-      height: auto;
       border-radius: 8px;
       margin-bottom: 10px;
-      display: block;
     }
 
-    .info-box p {
-      font-size: 0.9rem;
-      line-height: 1.4;
-    }
-
-    /* Mobile-friendly adjustments */
     @media (max-width: 768px) {
       .info-box {
-        width: 100%; /* stack boxes vertically on smaller screens */
-      }
-
-      .section-labels {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
+        width: 100%;
       }
     }
   </style>
@@ -163,7 +136,8 @@
     <div class="logo">GameHub</div>
     <nav>
       <a href="/GameHub/index.html">Home</a>
-      <!-- Replaced old link with button -->
+
+      <!-- NEW WORKING DEALS BUTTON -->
       <button id="dealsBtn">Gaming-Console Deals</button>
     </nav>
   </div>
@@ -175,96 +149,34 @@
   <div class="content">
     <div class="main-info">
       <h2>Welcome to GameHub</h2>
-      <p>This site provides information about gaming consoles, updates, and more. Explore the boxes below to learn about different consoles.</p>
+      <p>This site provides information about gaming consoles, updates, and more.</p>
     </div>
 
-    <!-- Date & Time box -->
-    <div class="info-box" id="time-box">
-      <h3>Date & Time</h3>
-      <p id="current-date"></p>
-      <p>
-        <span id="current-time" style="cursor:pointer; color:#ff4757; font-weight:bold;">
-          Click to change region
-        </span>
-      </p>
-      <select id="region-select" style="display:none; margin-top:10px;">
-        <option value="Australia/Sydney">Australia Eastern Standard Time (AEST)</option>
-        <option value="America/New_York">New York (EST)</option>
-        <option value="Europe/London">London (GMT)</option>
-        <option value="Asia/Tokyo">Tokyo (JST)</option>
-      </select>
-    </div>
-
-    <!-- Console info boxes -->
-    <h2 style="color:#ff4757;">Gaming Console Info</h2>
-
+    <!-- Example console box -->
     <div class="info-box">
       <h3>XBOX (original)</h3>
       <img src="images/XBOX.png" alt="XBOX">
-      <p>...</p>
+      <p>Console info here...</p>
     </div>
 
     <div class="info-box">
       <h3>Xbox 360</h3>
       <img src="images/Xbox360.png" alt="Xbox 360">
-      <p>...</p>
+      <p>Console info here...</p>
     </div>
 
-    <div class="info-box">
-      <h3>Console 1</h3>
-      <img src="images/xbox-series-x.png" alt="Xbox Series X">
-      <p>Enter details here...</p>
-    </div>
   </div>
 
   <script>
-    // Time region logic
-    let region = "Australia/Sydney"; // default region
-
-    function updateTime() {
-      let now = new Date();
-      let options = {
-        timeZone: region,
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit"
-      };
-      let formatter = new Intl.DateTimeFormat([], options);
-      let parts = formatter.formatToParts(now);
-
-      let dateStr = parts.filter(p => ["day","month","year"].includes(p.type))
-                         .map(p => p.value).join(" ");
-      let timeStr = parts.filter(p => ["hour","minute","second"].includes(p.type))
-                         .map(p => p.value).join(":");
-
-      document.getElementById("current-date").textContent = "Date: " + dateStr;
-      document.getElementById("current-time").textContent = "Time (" + region + "): " + timeStr;
-    }
-
-    setInterval(updateTime, 1000);
-    updateTime();
-
-    document.getElementById("current-time").addEventListener("click", () => {
-      let select = document.getElementById("region-select");
-      select.style.display = (select.style.display === "none") ? "block" : "none";
-    });
-
-    document.getElementById("region-select").addEventListener("change", (e) => {
-      region = e.target.value;
-      updateTime();
-    });
-
-    // Deals button redirect
+    // DEALS BUTTON REDIRECT (for Deals inside dashboard/)
     const dealsBtn = document.getElementById('dealsBtn');
+
     dealsBtn.addEventListener('click', () => {
       setTimeout(() => {
-        window.location.href = "/GameHub/Deals/";
-      }, 1000); // 1 second delay
+        window.location.href = "/GameHub/dashboard/Deals/";
+      }, 1000);
     });
   </script>
+
 </body>
 </html>
-
